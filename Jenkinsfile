@@ -1,4 +1,4 @@
 node {
    echo 'Hello World'
-   sh "${WORKSPACE}/hello.sh'
+   sh "${WORKSPACE}/hello.sh"
 }
