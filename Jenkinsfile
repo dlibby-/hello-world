@@ -1,5 +1,6 @@
 node {
    echo 'Hello World'
-   git 'https://github.com/dlibby-/hello-world'
+   checkout scm
+   sh "chmod o+w ${WORKSPACE}/*.sh" 
    sh "${WORKSPACE}/hello.sh"
 }
