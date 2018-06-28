@@ -1,2 +1,2 @@
 echo "cat"
-cat hello.c
+cat src/hello.c
