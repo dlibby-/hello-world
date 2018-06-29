@@ -1,1 +1,1 @@
-%~dp0\tools\bin\clang-cl.exe hello.c
+%~dp0\src\tools\bin\clang-cl.exe hello.c
