@@ -10,3 +10,9 @@ node {
       sh "${WORKSPACE}/hello.sh"
    }
 }
+
+stage("vmagent_exec") {
+   node("azwinbuild") {
+         bat 'dir /s'
+   }
+}
