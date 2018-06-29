@@ -11,10 +11,17 @@ node {
    }
 }
 
-stage("vmagent_exec") {
+stage("vmagent_build") {
    node("azwinbuild") {
       checkout scm
-      bat 'dir /s'
       bat 'build.bat'
+      stash include:'**/*.exe', name:'tests'
    }
+}
+
+stage("vmagent_test") {
+  node("azwin") {
+    unstash name:'tests'
+    bat 'hello.exe'
+  }
 }
