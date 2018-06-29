@@ -20,7 +20,7 @@ stage("vmagent_build") {
 }
 
 stage("vmagent_test") {
-  node("azwin") {
+  node("azwintest") {
     unstash name:'tests'
     bat 'hello.exe'
   }
