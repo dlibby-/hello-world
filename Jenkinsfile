@@ -13,6 +13,8 @@ node {
 
 stage("vmagent_exec") {
    node("azwinbuild") {
-         bat 'dir /s'
+      checkout scm
+      bat 'dir /s'
+      bat 'build.bat'
    }
 }
