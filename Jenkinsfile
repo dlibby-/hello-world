@@ -12,7 +12,7 @@ node {
 }
 
 stage("vmagent_build") {
-   node("azwinbuild") {
+   node("azwinvs") {
       checkout scm
       bat 'build.bat'
       stash include:'**/*.exe', name:'tests'
