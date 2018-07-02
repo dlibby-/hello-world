@@ -16,8 +16,10 @@ stage("build_ninja") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwinvs") {
-      bat 'ninja -C %SYSTEMDRIVE%\\EdgeCI\\src\\out\\default url_unittests'
-      stash include:'%SYSTEMDRIVE%\\EdgeCI\\src\\out\\default\\*.exe', name:'tests'
+      dir("-C /EdgeCI/src/out/default") {
+        pwd()
+        bat 'ninja url_unittests'
+        stash include:'*.exe', name:'tests'
    }
 }
 
