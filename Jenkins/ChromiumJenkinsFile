@@ -5,11 +5,8 @@ stage("vmagent_build") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwinvs") {
-      checkout scm     // Checkout the source, and...
-      bat 'build.bat'  // Run the checked in build script.
-      // 'stash' the results (in this case the built .exe) to a label 'tests' which subsequent
-      // stages/steps can reference by name. Note this is different than archiving.
-      stash include:'**/*.exe', name:'tests'
+      bat 'cd /d %SYSTEMDRIVE%\EdgeCI\src'
+      bat 'dir /a:d'
    }
 }
 
@@ -18,7 +15,8 @@ stage("vmagent_test") {
   // This stage runs on a different label - test VMs
   node("azwintest") {
     // unpack the stashed results ('tests') and run them
-    unstash name:'tests'
-    bat 'hello.exe'
+    //unstash name:'tests'
+    //bat 'hello.exe'
+    bat 'echo foobar'
   }
 }
