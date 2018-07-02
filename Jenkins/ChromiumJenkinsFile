@@ -27,7 +27,7 @@ stage("vmagent_test") {
   // This stage runs on a different label - test VMs
   node("azwintest") {
     // unpack the stashed results ('tests') and run them
-    //unstash name:'tests'
+    unstash name:'tests'
     bat 'url_unittests.exe'    
   }
 }
