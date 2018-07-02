@@ -1,13 +1,26 @@
 // Describes a new stage, stages are executed in the order in which they are declared
 // so this currently executes as the fourth stage
-stage("vmagent_build") {
+stage("build_gen") {
    // Providing a string argument to node() causes the steps inside to be executed on
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwinvs") {
-      bat 'cd /d %SYSTEMDRIVE%\\EdgeCI\\src & dir /a:d'
+      bat 'cd /d %SYSTEMDRIVE%\\EdgeCI\\src & gn gen out/default'
    }
 }
+
+// Describes a new stage, stages are executed in the order in which they are declared
+// so this currently executes as the fourth stage
+stage("build_ninja") {
+   // Providing a string argument to node() causes the steps inside to be executed on
+   // machines of a given label. This is currently configured to be a VisualStudio2017
+   // VM allocated on Azure
+   node("azwinvs") {
+      bat 'ninja -C %SYSTEMDRIVE%\\EdgeCI\\src\\out\\default url_unittests'
+      stash include:'%SYSTEMDRIVE%\\EdgeCI\\src\\out\\default\\*.exe', name:'tests'
+   }
+}
+
 
 // This stage doesn't run until after the build stage above
 stage("vmagent_test") {
@@ -15,7 +28,6 @@ stage("vmagent_test") {
   node("azwintest") {
     // unpack the stashed results ('tests') and run them
     //unstash name:'tests'
-    //bat 'hello.exe'
-    bat 'echo foobar'
+    bat 'url_unittests.exe'    
   }
 }
