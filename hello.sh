@@ -1,2 +1,2 @@
-echo "hello cat"
+echo "hello world"
 cat src/hello.c
