@@ -20,6 +20,7 @@ stage("build_ninja") {
         pwd()
         bat 'ninja url_unittests'
         stash include:'*.exe', name:'tests'
+      }
    }
 }
 
