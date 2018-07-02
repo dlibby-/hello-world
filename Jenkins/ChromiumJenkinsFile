@@ -5,7 +5,7 @@ stage("vmagent_build") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwinvs") {
-      bat 'cd /d %SYSTEMDRIVE%\EdgeCI\src'
+      bat 'cd /d %SYSTEMDRIVE%\\EdgeCI\\src'
       bat 'dir /a:d'
    }
 }
