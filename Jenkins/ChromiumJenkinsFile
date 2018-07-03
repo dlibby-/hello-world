@@ -2,8 +2,7 @@
 timeout(90) {
   stage("build_fetch_if_needed") {
     node("azwincr") {
-      bat 'dir d:\\EdgeCI'
-      bat 'if exist d:\\EdgeCI\\src ( echo already exist ) else ( cd d:\\EdgeCI & fetch chromium )'
+      bat "powershell.exe -NonInteractive -ExecutionPolicy Bypass .\\InstallDependencies.ps1"
     }
   }
 }
