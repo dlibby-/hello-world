@@ -2,7 +2,7 @@ $RootDir="D:\EdgeCI"
 if (!(Test-Path "$RootDir\Downloads")) {
 
     $DepotToolsUrl="https://storage.googleapis.com/chrome-infra/depot_tools.zip"
-    $VSSDKUrl="="https://download.microsoft.com/download/5/A/0/5A08CEF4-3EC9-494A-9578-AB687E716C12/windowssdk/winsdksetup.exe"
+    $VSSDKUrl="https://download.microsoft.com/download/5/A/0/5A08CEF4-3EC9-494A-9578-AB687E716C12/windowssdk/winsdksetup.exe"
 
     # Download Files
     New-Item -ItemType Directory -Force -Path $RootDir\Downloads
