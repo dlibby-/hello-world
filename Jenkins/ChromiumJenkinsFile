@@ -1,11 +1,19 @@
 // Describes a new stage, stages are executed in the order in which they are declared
-// so this currently executes as the fourth stage
+timeout(90) {
+  stage("build_fetch_if_needed") {
+    node("azwincr") {
+      bat 'dir d:\\EdgeCI'
+      bat 'if exist d:\\EdgeCI\\src ( echo already exist ) else ( cd d:\\EdgeCI & fetch chromium )'
+    }
+  }
+}
+
 stage("build_gen") {
    // Providing a string argument to node() causes the steps inside to be executed on
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
-   node("azwinvs") {
-      bat 'cd /d %SYSTEMDRIVE%\\EdgeCI\\src & gn gen out/default'
+   node("azwincr") {
+      bat 'cd /d d:\\EdgeCI\\src & gn gen out/default'
    }
 }
 
@@ -15,7 +23,7 @@ stage("build_ninja") {
    // Providing a string argument to node() causes the steps inside to be executed on
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
-   node("azwinvs") {
+   node("azwincr") {
       dir("/EdgeCI/src/out/default") {
         pwd()
         bat 'ninja url_unittests'
