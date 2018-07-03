@@ -13,6 +13,7 @@ stage("build_gen") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwincr") {
+      bat 'echo %PATH%'
       bat 'cd /d d:\\EdgeCI\\src & gn gen out/default'
    }
 }
