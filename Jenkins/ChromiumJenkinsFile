@@ -40,7 +40,7 @@ stage("build_ninja") {
    node("azwincr") {
       dir("d:/EdgeCI/chromium/src/out/default") {
         pwd()
-        bat 'ninja url_unittests'
+        bat 'ninja url_unittests base_unittests'
         bat 'dir *.exe'
         stash includes:'*.exe', name:'tests'
       }
@@ -55,6 +55,7 @@ stage("vmagent_test") {
     // unpack the stashed results ('tests') and run them
     unstash name:'tests'
     bat 'dir /s'
-    bat 'url_unittests.exe'    
+    bat 'url_unittests.exe'  
+    
   }
 }
