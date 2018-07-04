@@ -56,6 +56,6 @@ stage("vmagent_test") {
     unstash name:'tests'
     bat 'dir /s'
     bat 'url_unittests.exe'  
-    
+    bat 'base_unittests.exe'
   }
 }
