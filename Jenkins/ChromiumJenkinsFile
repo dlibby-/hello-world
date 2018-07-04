@@ -53,7 +53,7 @@ stage("vmagent_test") {
   node("azwintest") {
     // unpack the stashed results ('tests') and run them
     unstash name:'tests'
-    bat 'dir /s *.exe'
+    bat 'dir /s'
     bat 'url_unittests.exe'    
   }
 }
