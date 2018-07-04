@@ -41,7 +41,7 @@ stage("build_ninja") {
       dir("d:/EdgeCI/src/src/out/default") {
         pwd()
         bat 'ninja url_unittests'
-        stash include:'./*.exe', name:'tests'
+        stash includes:'./*.exe', name:'tests'
       }
    }
 }
