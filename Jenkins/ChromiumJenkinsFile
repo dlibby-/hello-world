@@ -14,11 +14,11 @@ stage("build_gen") {
    // VM allocated on Azure
    node("azwincr") {
       pwd()
-      bat 'cd /d d:\\EdgeCI\\chromium\\src'
+      bat 'cd /d d:\\EdgeCI\\src\\src'
       pwd()
-      dir("d:/EdgeCI/chromium/out/default") {
+      dir("d:/EdgeCI/src/src/out/default") {
         pwd()
-        bat 'cd /d d:\\EdgeCI\\chromium\\src & gn gen out/default'
+        bat 'cd /d d:\\EdgeCI\\src\\src & gn gen out/default'
       }
    }
 }
