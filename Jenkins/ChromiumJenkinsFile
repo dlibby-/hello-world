@@ -8,14 +8,25 @@ timeout(90) {
   }
 }
 
+stage("build_sync") {
+   // Providing a string argument to node() causes the steps inside to be executed on
+   // machines of a given label. This is currently configured to be a VisualStudio2017
+   // VM allocated on Azure
+   node("azwincr") {
+      dir("d:/EdgeCI/src/src") {
+        bat 'gclient sync'
+      }
+   }
+}
+
 stage("build_gen") {
    // Providing a string argument to node() causes the steps inside to be executed on
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwincr") {
-      dir("d:/EdgeCI/src/src/out/default") {
+      dir("d:/EdgeCI/src/src") {
         pwd()
-        bat 'cd /d d:\\EdgeCI\\src\\src & gn gen out/default'
+        bat 'gn gen out/default'
       }
    }
 }
