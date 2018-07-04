@@ -43,7 +43,7 @@ stage("build_ninja") {
         pwd()
         bat 'ninja url_unittests'
         bat 'dir *.exe'
-        bat 'gn args --list out/default'
+        bat 'gn args --list .'
         stash includes:'*.exe', name:'tests'
       }
    }
