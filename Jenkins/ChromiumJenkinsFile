@@ -1,3 +1,8 @@
+stage("build_acquire") {
+  node("azwincr") {
+    bat "echo Got One!"
+  }
+}
 // Describes a new stage, stages are executed in the order in which they are declared
 timeout(90) {
   stage("build_fetch_if_needed") {
