@@ -49,7 +49,7 @@ stage("build_ninja") {
         bat 'ninja url_unittests'
         bat 'dir *.exe'
         bat 'gn args --list .'
-        stash excludes:'*/*.obj,*/*.ninja', name:'tests'
+        stash excludes:'**/*.obj,**/*.ninja', name:'tests'
       }
    }
 }
