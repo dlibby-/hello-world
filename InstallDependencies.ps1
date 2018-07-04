@@ -20,5 +20,5 @@ if (!(Test-Path "$RootDir\Downloads")) {
     # fetch code
     New-Item -ItemType Directory -Force -Path $RootDir\src
     cd $RootDir\src
-    fetch chromium
+    fetch --no-history chromium
 }
