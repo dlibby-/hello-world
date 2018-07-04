@@ -27,6 +27,7 @@ stage("build_gen") {
       dir("d:/EdgeCI/chromium/src") {
         pwd()
         bat 'gn gen out/default'
+        
       }
    }
 }
@@ -40,8 +41,9 @@ stage("build_ninja") {
    node("azwincr") {
       dir("d:/EdgeCI/chromium/src/out/default") {
         pwd()
-        bat 'ninja url_unittests base_unittests'
+        bat 'ninja url_unittests'
         bat 'dir *.exe'
+        bat 'gn args --list out/default'
         stash includes:'*.exe', name:'tests'
       }
    }
@@ -56,6 +58,5 @@ stage("vmagent_test") {
     unstash name:'tests'
     bat 'dir /s'
     bat 'url_unittests.exe'  
-    bat 'base_unittests.exe'
   }
 }
