@@ -13,7 +13,7 @@ stage("build_sync") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwincr") {
-      dir("d:/EdgeCI/src/src") {
+      dir("d:/EdgeCI/chromium/src") {
         bat 'gclient sync'
       }
    }
@@ -24,7 +24,7 @@ stage("build_gen") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwincr") {
-      dir("d:/EdgeCI/src/src") {
+      dir("d:/EdgeCI/chromium/src") {
         pwd()
         bat 'gn gen out/default'
       }
@@ -38,10 +38,11 @@ stage("build_ninja") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwincr") {
-      dir("d:/EdgeCI/src/src/out/default") {
+      dir("d:/EdgeCI/chromium/src/out/default") {
         pwd()
         bat 'ninja url_unittests'
-        stash includes:'./*.exe', name:'tests'
+        bat 'dir *.exe'
+        stash includes:'*.exe', name:'tests'
       }
    }
 }
