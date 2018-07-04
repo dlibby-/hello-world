@@ -31,7 +31,7 @@ stage("build_gen") {
    node("azwincr") {
       dir("d:/EdgeCI/chromium/src") {
         pwd()
-        bat 'gn gen out/default'
+        bat 'gn gen out/default --args="is_component_build = false'
         
       }
    }
@@ -62,7 +62,7 @@ stage("vmagent_test") {
     // unpack the stashed results ('tests') and run them
     unstash name:'tests'
     bat 'dir /s'
-    //bat 'url_unittests.exe'  
+    bat 'url_unittests.exe'  
     deleteDir()
   }
 }
