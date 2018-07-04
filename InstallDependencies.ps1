@@ -18,7 +18,7 @@ if (!(Test-Path "$RootDir\Downloads")) {
     Start-Process -Wait "$RootDir\Downloads\winsdksetup.exe" "/features OptionId.WindowsDesktopDebuggers OptionId.DesktopCPPx64 OptionId.DesktopCPPx86 /q" 
     
     # fetch code
-    New-Item -ItemType Directory -Force -Path $RootDir\src
-    cd $RootDir\src
+    New-Item -ItemType Directory -Force -Path $RootDir\chromium
+    cd $RootDir\chromium
     fetch --no-history chromium
 }
