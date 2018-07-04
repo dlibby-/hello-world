@@ -13,9 +13,6 @@ stage("build_gen") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwincr") {
-      pwd()
-      bat 'cd /d d:\\EdgeCI\\src\\src'
-      pwd()
       dir("d:/EdgeCI/src/src/out/default") {
         pwd()
         bat 'cd /d d:\\EdgeCI\\src\\src & gn gen out/default'
@@ -30,7 +27,7 @@ stage("build_ninja") {
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
    node("azwincr") {
-      dir("/EdgeCI/src/out/default") {
+      dir("d:/EdgeCI/src/src/out/default") {
         pwd()
         bat 'ninja url_unittests'
         stash include:'./*.exe', name:'tests'
