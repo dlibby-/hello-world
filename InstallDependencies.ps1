@@ -22,7 +22,8 @@ if (!(Test-Path "$RootDir\Downloads")) {
     # fetch code
     New-Item -ItemType Directory -Force -Path $RootDir\chromium
     cd $RootDir\chromium
-    fetch --no-history edge
+#    fetch --no-history edge
+    fetch --no-history chromium
 }
 
 exit $LastExitCode
