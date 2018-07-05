@@ -31,7 +31,7 @@ stage("build_gen") {
    node("azwincr") {
       dir("d:/EdgeCI/chromium/src") {
         pwd()
-        bat 'gn gen out/default --args="is_debug = false"'
+        bat 'gn gen out/default --args="use_jumbo_build = true"'
         
       }
    }
