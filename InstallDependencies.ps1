@@ -13,6 +13,8 @@ if (!(Test-Path "$RootDir\Downloads")) {
     
     # Install Depot Tools
     Add-Type -AssemblyName System.IO.Compression.FileSystem ; [System.IO.Compression.ZipFile]::ExtractToDirectory("$RootDir\Downloads\depot_tools.zip", "$RootDir\DepotTools\")
+    
+    Copy-Item edge.py -destination $RootDir\DepotTools\fetch_configs\edge.py
 
     # Install Windows SDK
     Start-Process -Wait "$RootDir\Downloads\winsdksetup.exe" "/features OptionId.WindowsDesktopDebuggers OptionId.DesktopCPPx64 OptionId.DesktopCPPx86 /q" 
@@ -20,5 +22,5 @@ if (!(Test-Path "$RootDir\Downloads")) {
     # fetch code
     New-Item -ItemType Directory -Force -Path $RootDir\chromium
     cd $RootDir\chromium
-    fetch --no-history chromium
+    fetch --no-history edge
 }
