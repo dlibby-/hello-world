@@ -46,7 +46,7 @@ stage("build_ninja") {
    node("azwincr") {
       dir("d:/EdgeCI/chromium/src/out/default") {
         pwd()
-        bat 'ninja url_unittests content_shell'
+        bat 'ninja url_unittests'
         bat 'dir *.exe'
         bat 'gn args --list .'
         stash excludes:'**/*.obj,**/*.ninja', name:'tests'
