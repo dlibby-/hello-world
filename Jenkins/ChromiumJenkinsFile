@@ -1,6 +1,6 @@
 stage("build_acquire") {
   node("azwincr") {
-    bat "echo Got One!"
+    bat "echo Got azwincr!"
   }
 }
 // Describes a new stage, stages are executed in the order in which they are declared
