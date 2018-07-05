@@ -24,3 +24,5 @@ if (!(Test-Path "$RootDir\Downloads")) {
     cd $RootDir\chromium
     fetch --no-history edge
 }
+
+exit $LastExitCode
