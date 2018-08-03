@@ -24,7 +24,7 @@ stage("vmagent_build") {
    // Providing a string argument to node() causes the steps inside to be executed on
    // machines of a given label. This is currently configured to be a VisualStudio2017
    // VM allocated on Azure
-   node("azwintest") {
+   node("azwincr") {
       checkout scm     // Checkout the source, and...
       bat 'build.bat'  // Run the checked in build script.
       // 'stash' the results (in this case the built .exe) to a label 'tests' which subsequent
