@@ -37,10 +37,11 @@ def test_shards = [:]
 
 for (int i = 0; i < 10; i++) {
     def index = i //if we tried to use i below, it would equal 4 in each job execution.
-    test_shards["vmagent_test${i}"] = {
+    test_shards["test${i}"] = {
         node("azwintest") {
             // unpack the stashed results ('tests') and run them
             unstash name:'tests'
+            bat 'timeout 120'
             bat "echo ${index} & hello.exe"
         }
     }
