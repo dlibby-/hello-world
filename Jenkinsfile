@@ -35,18 +35,50 @@ stage("vmagent_build") {
 
 def test_shards = [:]
 
-def shards = 10
-for (int i = 0; i < shards; i++) {
-    def index = i //if we tried to use i below, it would equal 4 in each job execution.
-    test_shards["test${i}"] = {
-        stage("vmagent_test${index}") {
+def test_sets = readJSON text: '''
+    [{
+        "name" : "test_set_1",
+        "shards" : 10,
+        "command" : "echo set_1 ${index} & hello.exe"
+    },
+    {
+        "name" : "test_set_noshard",
+        "command" : "echo set_noshard ${index} & hello.exe"
+    },
+    {
+        "name" : "test_set_2",
+        "shards" : 10,
+        "command" : "echo set_2 ${index} & hello.exe"
+    }]
+'''
+
+for (record in test_sets) {
+    if (record.shards) {
+        for (int i = 0; i < record.shards; i++) {
+            def index = i //if we tried to use i below, it would equal 4 in each job execution.
+            test_shards["${record.name}.${i}"] = {
+                stage("vmagent_test${record.name}.${index}") {
+                    node("azwintest") {
+                        // unpack the stashed results ('tests') and run them
+                        unstash name:'tests'
+                        bat record.command
+                    }
+                }
+            }
+        }
+    }
+    else {
+        stage("vmagent_test${record.name}") {
             node("azwintest") {
-                // unpack the stashed results ('tests') and run them
                 unstash name:'tests'
-                bat "echo ${index} & hello.exe"
+                bat record.command
             }
         }
     }
 }
 
-parallel test_shards
+stage("echoer") { node("azwincr") {
+    bat "echo ${test_shards}"
+}}
+
+//parallel test_shards
