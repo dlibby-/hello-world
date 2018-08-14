@@ -33,12 +33,26 @@ stage("vmagent_build") {
    }
 }
 
-// This stage doesn't run until after the build stage above
-stage("vmagent_test") {
-  // This stage runs on a different label - test VMs
-  node("azwintest") {
-    // unpack the stashed results ('tests') and run them
-    unstash name:'tests'
-    bat 'hello.exe'
+parallel(
+  "test1" : {
+    // This stage doesn't run until after the build stage above
+    stage("vmagent_test1") {
+        // This stage runs on a different label - test VMs
+        node("azwintest") {
+            // unpack the stashed results ('tests') and run them
+            unstash name:'tests'
+            bat 'echo 1 & hello.exe'
+        }
+    }
+  },
+  "test2" : {
+    stage("vmagent_test1") {
+        // This stage runs on a different label - test VMs
+        node("azwintest") {
+            // unpack the stashed results ('tests') and run them
+            unstash name:'tests'
+            bat 'echo 2 & hello.exe'
+        }
+    }
   }
-}
+)
