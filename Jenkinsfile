@@ -46,7 +46,7 @@ parallel(
     }
   },
   "test2" : {
-    stage("vmagent_test1") {
+    stage("vmagent_test2") {
         // This stage runs on a different label - test VMs
         node("azwintest") {
             // unpack the stashed results ('tests') and run them
