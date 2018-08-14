@@ -47,7 +47,7 @@ def test_sets = readJSON text: '''
     },
     {
         "name" : "test_set_2",
-        "shards" : 10,
+        "shards" : 20,
         "command" : "echo set_2"// ${index}" // & hello.exe"
     }]
 '''
