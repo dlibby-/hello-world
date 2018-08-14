@@ -39,16 +39,16 @@ def test_sets = readJSON text: '''
     [{
         "name" : "test_set_1",
         "shards" : 10,
-        "command" : "echo set_1 ${index}" // & hello.exe"
+        "command" : "echo set_1"// ${index}" // & hello.exe"
     },
     {
         "name" : "test_set_noshard",
-        "command" : "echo set_noshard ${index}" // & hello.exe"
+        "command" : "echo set_noshard"// ${index}" // & hello.exe"
     },
     {
         "name" : "test_set_2",
         "shards" : 10,
-        "command" : "echo set_2 ${index}" // & hello.exe"
+        "command" : "echo set_2"// ${index}" // & hello.exe"
     }]
 '''
 
@@ -62,7 +62,7 @@ for (record in test_sets) {
                     node("azwintest") {
                         // unpack the stashed results ('tests') and run them
                         //unstash name:'tests'
-                        bat recForClosure.command
+                        bat recForClosure.command + " ${index}"
                     }
                 }
             }
