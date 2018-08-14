@@ -41,7 +41,6 @@ for (int i = 0; i < 10; i++) {
         node("azwintest") {
             // unpack the stashed results ('tests') and run them
             unstash name:'tests'
-            bat 'timeout 120'
             bat "echo ${index} & hello.exe"
         }
     }

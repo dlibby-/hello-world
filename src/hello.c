@@ -3,8 +3,18 @@
 // found in the LICENSE file.
 
 #include <stdio.h>
+#include <time.h>
 
 int main() {
   printf("Hello world\n");
+  time_t start;
+  time(&start); 
+  while(1) {
+    time_t now;
+    time(&now);
+    if (now - start > 120) {
+      break;
+    }
+  }
   return 0;
 }
