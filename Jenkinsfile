@@ -62,7 +62,7 @@ for (record in test_sets) {
                     node("azwintest") {
                         // unpack the stashed results ('tests') and run them
                         //unstash name:'tests'
-                        bat recForClosure.command + " ${index}"
+                        bat recForClosure.command + " ${index}/${recForClosure.shards}"
                     }
                 }
             }
