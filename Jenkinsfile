@@ -33,26 +33,17 @@ stage("vmagent_build") {
    }
 }
 
-parallel(
-  "test1" : {
-    // This stage doesn't run until after the build stage above
-    stage("vmagent_test1") {
-        // This stage runs on a different label - test VMs
+def test_shards = [:]
+
+for (int i = 0; i < 10; i++) {
+    def index = i //if we tried to use i below, it would equal 4 in each job execution.
+    test_shards["vmagent_test${i}"] = {
         node("azwintest") {
             // unpack the stashed results ('tests') and run them
             unstash name:'tests'
-            bat 'echo 1 & hello.exe'
+            bat "echo ${index} & hello.exe"
         }
     }
-  },
-  "test2" : {
-    stage("vmagent_test2") {
-        // This stage runs on a different label - test VMs
-        node("azwintest") {
-            // unpack the stashed results ('tests') and run them
-            unstash name:'tests'
-            bat 'echo 2 & hello.exe'
-        }
-    }
-  }
-)
+}
+
+parallel test_shards
