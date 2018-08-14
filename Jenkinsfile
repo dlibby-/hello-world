@@ -20,18 +20,18 @@ node {
 
 // Describes a new stage, stages are executed in the order in which they are declared
 // so this currently executes as the fourth stage
-stage("vmagent_build") {
-   // Providing a string argument to node() causes the steps inside to be executed on
-   // machines of a given label. This is currently configured to be a VisualStudio2017
-   // VM allocated on Azure
-   node("azwincr") {
-      checkout scm     // Checkout the source, and...
-      bat 'build.bat'  // Run the checked in build script.
-      // 'stash' the results (in this case the built .exe) to a label 'tests' which subsequent
-      // stages/steps can reference by name. Note this is different than archiving.
-      stash include:'**/*.exe', name:'tests'
-   }
-}
+//stage("vmagent_build") {
+//   // Providing a string argument to node() causes the steps inside to be executed on
+//   // machines of a given label. This is currently configured to be a VisualStudio2017
+//   // VM allocated on Azure
+//   node("azwincr") {
+//      checkout scm     // Checkout the source, and...
+//      bat 'build.bat'  // Run the checked in build script.
+//      // 'stash' the results (in this case the built .exe) to a label 'tests' which subsequent
+//      // stages/steps can reference by name. Note this is different than archiving.
+//      stash include:'**/*.exe', name:'tests'
+//   }
+//}
 
 def test_shards = [:]
 
@@ -39,45 +39,48 @@ def test_sets = readJSON text: '''
     [{
         "name" : "test_set_1",
         "shards" : 10,
-        "command" : "echo set_1 ${index} & hello.exe"
+        "command" : "echo set_1 ${index}" // & hello.exe"
     },
     {
         "name" : "test_set_noshard",
-        "command" : "echo set_noshard ${index} & hello.exe"
+        "command" : "echo set_noshard ${index}" // & hello.exe"
     },
     {
         "name" : "test_set_2",
         "shards" : 10,
-        "command" : "echo set_2 ${index} & hello.exe"
+        "command" : "echo set_2 ${index}" // & hello.exe"
     }]
 '''
 
 for (record in test_sets) {
+    def recForClosure = record
     if (record.shards) {
         for (int i = 0; i < record.shards; i++) {
             def index = i //if we tried to use i below, it would equal 4 in each job execution.
             test_shards["${record.name}.${i}"] = {
-                stage("vmagent_test${record.name}.${index}") {
+                stage("vmagent_test${recForClosure.name}.${index}") {
                     node("azwintest") {
                         // unpack the stashed results ('tests') and run them
-                        unstash name:'tests'
-                        bat record.command
+                        //unstash name:'tests'
+                        bat recForClosure.command
                     }
                 }
             }
         }
     }
     else {
-        stage("vmagent_test${record.name}") {
-            node("azwintest") {
-                unstash name:'tests'
-                bat record.command
+        test_shards["${record.name}"] = {
+            stage("vmagent_test${recForClosure.name}") {
+                node("azwintest") {
+                    //unstash name:'tests'
+                    bat recForClosure.command
+                }
             }
         }
     }
 }
 
-stage("echoer") { node("azwincr") {
+stage("echoer") { node("azwintest") {
     bat "echo ${test_shards}"
 }}
 
