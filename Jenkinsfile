@@ -84,4 +84,4 @@ stage("echoer") { node("azwintest") {
     bat "echo ${test_shards}"
 }}
 
-//parallel test_shards
+parallel test_shards
