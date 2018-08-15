@@ -61,7 +61,7 @@ for (record in test_sets) {
                 stage("vmagent_test${recForClosure.name}.${index}") {
                     node("azwintest") {
                         // unpack the stashed results ('tests') and run them
-                        //unstash name:'tests'
+                        unstash name:'tests'
                         bat recForClosure.command + " ${index}/${recForClosure.shards}"
                     }
                 }
