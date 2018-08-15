@@ -18,8 +18,8 @@ node {
    }
 }
 
- Describes a new stage, stages are executed in the order in which they are declared
- so this currently executes as the fourth stage
+// Describes a new stage, stages are executed in the order in which they are declared
+// so this currently executes as the fourth stage
 stage("vmagent_build") {
    // Providing a string argument to node() causes the steps inside to be executed on
    // machines of a given label. This is currently configured to be a VisualStudio2017
