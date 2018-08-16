@@ -32,9 +32,7 @@ node {
                 stage("wait for webhook") {
                     def data = waitForWebhook hook
                     echo "Webhook called with data: ${data}"
-                }
-
-}
+           }
 
 // Describes a new stage, stages are executed in the order in which they are declared
 // so this currently executes as the fourth stage
