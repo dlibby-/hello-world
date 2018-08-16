@@ -38,18 +38,18 @@ node {
 
 // Describes a new stage, stages are executed in the order in which they are declared
 // so this currently executes as the fourth stage
-//stage("vmagent_build") {
-//   // Providing a string argument to node() causes the steps inside to be executed on
-//   // machines of a given label. This is currently configured to be a VisualStudio2017
-//   // VM allocated on Azure
-//   node("azwincr") {
-//      checkout scm     // Checkout the source, and...
-//      bat 'build.bat'  // Run the checked in build script.
-//      // 'stash' the results (in this case the built .exe) to a label 'tests' which subsequent
-//      // stages/steps can reference by name. Note this is different than archiving.
-//      stash include:'**/*.exe', name:'tests'
-//   }
-//}
+stage("vmagent_build") {
+   // Providing a string argument to node() causes the steps inside to be executed on
+   // machines of a given label. This is currently configured to be a VisualStudio2017
+   // VM allocated on Azure
+   node("azwincr") {
+      checkout scm     // Checkout the source, and...
+      bat 'build.bat'  // Run the checked in build script.
+      // 'stash' the results (in this case the built .exe) to a label 'tests' which subsequent
+      // stages/steps can reference by name. Note this is different than archiving.
+      stash include:'**/*.exe', name:'tests'
+   }
+}
 
 def test_shards = [:]
 
@@ -98,9 +98,9 @@ for (record in test_sets) {
     }
 }
 
-//stage("echoer") { node("azwintest") {
-//    bat "echo ${test_shards}"
-//}}
+stage("echoer") { node("azwintest") {
+    bat "echo ${test_shards}"
+}}
 
-//parallel test_shards
+parallel test_shards
 
