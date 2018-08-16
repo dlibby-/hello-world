@@ -33,9 +33,8 @@ node {
                     def data = waitForWebhook hook
                     echo "Webhook called with data: ${data}"
                 }
-           }]
+   }]
 
-   }
 }
 
 // Describes a new stage, stages are executed in the order in which they are declared
