@@ -17,13 +17,24 @@ node {
       sh "${WORKSPACE}/hello.sh"
    }
 
+   def hook
    stage("register and wait for webhook") {
-       def hook = registerWebhook();
+       hook = registerWebhook();
 
-        echo "Waiting for POST to ${hook.getURL()}"
+       echo "Waiting for POST to ${hook.getURL()}"
+   }
+   parallel ["post" : {
+                stage("post webhook") {
+                    sh "curl -X POST -d '{\"foo\":\"bar\"}' ${hook.getURL()}"
+                }
+           },
+           "wait" : {
+                stage("wait for webhook") {
+                    def data = waitForWebhook hook
+                    echo "Webhook called with data: ${data}"
+                }
+           }]
 
-        def data = waitForWebhook hook
-        echo "Webhook called with data: ${data}"
    }
 }
 
