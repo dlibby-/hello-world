@@ -23,17 +23,16 @@ node {
 
        echo "Waiting for POST to ${hook.getURL()}"
    }
-   parallel ["post" : {
+   parallel post : {
                 stage("post webhook") {
                     sh "curl -X POST -d '{\"foo\":\"bar\"}' ${hook.getURL()}"
                 }
            },
-           "wait" : {
+           wait : {
                 stage("wait for webhook") {
                     def data = waitForWebhook hook
                     echo "Webhook called with data: ${data}"
                 }
-   }]
 
 }
 
