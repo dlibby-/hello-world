@@ -12,7 +12,7 @@ int main() {
   while(1) {
     time_t now;
     time(&now);
-    if (now - start > 120) {
+    if (now - start > 60) {
       break;
     }
   }
