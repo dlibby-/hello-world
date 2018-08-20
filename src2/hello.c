@@ -10,7 +10,7 @@ int main() {
   time_t start;
   time(&start); 
   while(1) {
-    time_t now;
+    time_t now, later;
     time(&now);
     if (now - start > 60) {
       break;
